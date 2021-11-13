@@ -1,0 +1,15 @@
+<div class="float-right dirselect" *ngIf="!onlyRead">
+    <select class="custom-select"  #dirselect name="select" [(ngModel)]="idFlotilla" (change)="onChange($event, dirselect.value)">
+        <option *ngFor="let element of selectionables" value="{{ element.name }}">
+            {{ element.name +' - '+ element.caption }}
+        </option>
+      </select>
+      <small  id="emailHelp" class="form-text text-muted">Seleccione la Dirección que va a visualizar.</small >
+</div>
+
+
+    <select *ngIf="onlyRead" #dirselect name="select"  class="custom-select" [(ngModel)]="idFlotilla" (change)="onChange($event, dirselect.value)">
+        <option *ngFor="let element of selectionables" value="{{ element.name }}">
+            {{ element.name +' - '+ element.caption }}
+        </option>
+      </select>
