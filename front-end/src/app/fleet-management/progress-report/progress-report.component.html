@@ -60,9 +60,8 @@
     (click)="agregarCotizacionSisco()">
     Enviar a SISCO
   </button>
-  <button class="btn btn-dark" (click)="muestraUtilidad()" *ngIf=" banderaBotonUtilidad == 1"
-    [disabled]="pricingManagerService.perfilSoloLectura">Ver utilidad
-  </button>
+  <button class="btn btn-dark" (click)="muestraUtilidad()"
+    [disabled]="pricingManagerService.perfilSoloLectura">Ver utilidad</button>
 </div>
 
 

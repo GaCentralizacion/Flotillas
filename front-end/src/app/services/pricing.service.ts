@@ -778,13 +778,10 @@ export class PricingService {
   }
 
    // Cambio Utilidad Total de la utilidad por vuelta - EHJ-COAL
-  obtenTotalUtilidad(idCotizacion,idOpcion) {
+   obtenTotalUtilidad(idCotizacion,idOpcion) {
     return this.http.get(`${this.appService.url}cotizador/obtenTotalUtilidad/${idCotizacion}/${idOpcion}`);
   }
 
-  validaBotonUtilidad(idUsuario) {
-    return this.http.get(`${this.appService.url}cotizador/validaBotonUtilidad/${idUsuario}`);
-  }
     // Obtiene Estatus de Notificaciones  - EHJ-COAL
     obtenNotificacion(idCotizacion) {
       return this.http.get(`${this.appService.url}cotizador/obtenNotificacion/${idCotizacion}`);

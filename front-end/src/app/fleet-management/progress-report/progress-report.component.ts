@@ -22,6 +22,7 @@ import { ModalUtilidadComponent} from './modal-utilidad/modal-utilidad.component
 import { ModalTranseferVinComponent } from './modal-transefer-vin/modal-transefer-vin.component';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Notification } from 'src/app/models/notification.model';
+import { environment } from '../../../environments/environment.prod'
 //SISCO
 import { SolicitudCotizacionSisco } from 'src/app/models/accesorio.model';
 @Component({
@@ -60,10 +61,6 @@ export class ProgressReportComponent implements OnInit {
   aprobacion4: string;
   aprobacion5: string;
   aprobacion6: string;
-  
-  banderaBotonUtilidad: number = 0;
-  idUsuario: number;
-  
 
   rowHeight = 500;
   /* Copys */
@@ -196,10 +193,7 @@ export class ProgressReportComponent implements OnInit {
     this.existeSisco2();
     this.estatusSisco();
     this.validaAgregarAccesoriosPostAd();
-    this.obtenNotificacion();
-    const objAuth: any = JSON.parse(localStorage.getItem('app_token'));
-    this.idUsuario = objAuth.data.user.id;
-    this.validaBotonUtilidad();
+    this.obtenNotificacion()
   }
 
   //OCT99
@@ -994,10 +988,10 @@ export class ProgressReportComponent implements OnInit {
     this.accesorioCatalogService.getDatosSisco().subscribe(async (datos) => {
 
       //this.accesorioCatalogService.postSiscoLogin(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin).subscribe(async (aut) => {
-      await this.loginSisco(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin)
-        .then(async (aut: any[]) => {
+      // await this.loginSisco(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin).then(async (aut: any[]) => {
 
-          let token = aut[0].data.security.token;
+          let token = environment.tokenSisco; 
+          //aut[0].data.security.token;
 
           respSisco.forEach(async (accesorioSISCO) => {
 
@@ -1092,13 +1086,11 @@ export class ProgressReportComponent implements OnInit {
           });//foreach accesorios
           this.modalService.dismissAll();
           // this.avanzaStepTraslados();
-        })//LOGIN SISCO
-        .catch(err => {
-          let error = JSON.parse(err[0].Error);
-          this.toastrService.error(error.errors[0].description, 'LOGIN SISCO');
-        }
-        );
-
+        // })//LOGIN SISCO
+        // .catch(err => {
+        //   let error = JSON.parse(err[0].Error);
+        //   this.toastrService.error(error.errors[0].description, 'LOGIN SISCO');
+        // });
     });
   }
 
@@ -1127,16 +1119,16 @@ export class ProgressReportComponent implements OnInit {
     this.refreshData();
   }
 
-  async loginSisco(email, password, application, urlLogin): Promise<any[]> {
-    return new Promise<any[]>((resolve, reject) => {
-      this.accesorioCatalogService.postSiscoLogin(email, password, application, urlLogin).subscribe(async (aut) => {
-        resolve(aut);
-      }, (httpError) => {
-        const message = typeof httpError.error === 'object' ? JSON.stringify(httpError.error) : httpError.error;
-        reject([{ Error: message }]);
-      });
-    });
-  }
+  // async loginSisco(email, password, application, urlLogin): Promise<any[]> {
+  //   return new Promise<any[]>((resolve, reject) => {
+  //     this.accesorioCatalogService.postSiscoLogin(email, password, application, urlLogin).subscribe(async (aut) => {
+  //       resolve(aut);
+  //     }, (httpError) => {
+  //       const message = typeof httpError.error === 'object' ? JSON.stringify(httpError.error) : httpError.error;
+  //       reject([{ Error: message }]);
+  //     });
+  //   });
+  // }
 
   //Notificaciones EH
   obtenNotificacion(){
@@ -1208,15 +1200,4 @@ export class ProgressReportComponent implements OnInit {
         this.toastSerivce.success('Notificación enviada');
       });
   }
-
-
-  validaBotonUtilidad() {
-    this.pricingService.validaBotonUtilidad(this.idUsuario)
-    .subscribe((notf: any) => {
-      if (notf[0].Success !== 1) {
-        this.banderaBotonUtilidad = 1
-      }
-    })
-  }
-
 }

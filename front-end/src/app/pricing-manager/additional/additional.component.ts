@@ -12,6 +12,7 @@ import { SelectionTabComponent } from './selection-tab/selection-tab.component';
 
 //SISCO
 import { SolicitudCotizacionSisco } from 'src/app/models/accesorio.model'
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-additional',
@@ -331,10 +332,10 @@ export class AdditionalComponent implements OnInit {
       this.accesorioCatalogService.getDatosSisco().subscribe(async (datos) => {
 
         //this.accesorioCatalogService.postSiscoLogin(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin).subscribe(async (aut) => {
-        await this.loginSisco(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin)
-          .then(async (aut: any[]) => {
+        // await this.loginSisco(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin).then(async (aut: any[]) => {
 
-            let token = aut[0].data.security.token;
+            let token = environment.tokenSisco;
+            //aut[0].data.security.token;
 
             respSisco1.forEach(async (accesorioSISCO) => {
 
@@ -448,12 +449,11 @@ export class AdditionalComponent implements OnInit {
             this.modalService.dismissAll();
             this.avanzaStepTraslados();
             //});
-          })//LOGIN SISCO
-          .catch(err => {
-            let error = JSON.parse(err[0].Error);
-            this.toastrService.error(error.errors[0].description, 'LOGIN SISCO');
-          }
-          );
+          // })//LOGIN SISCO
+          // .catch(err => {
+          //   let error = JSON.parse(err[0].Error);
+          //   this.toastrService.error(error.errors[0].description, 'LOGIN SISCO');
+          // });
       });
     });
   }
@@ -558,15 +558,15 @@ export class AdditionalComponent implements OnInit {
     // });
   }
 
-  async loginSisco(email, password, application, urlLogin): Promise<any[]> {
-    return new Promise<any[]>((resolve, reject) => {
-      this.accesorioCatalogService.postSiscoLogin(email, password, application, urlLogin).subscribe(async (aut) => {
-        resolve(aut);
-      }, (httpError) => {
-        const message = typeof httpError.error === 'object' ? JSON.stringify(httpError.error) : httpError.error;
-        reject([{ Error: message }]);
-      });
-    });
-  }
+  // async loginSisco(email, password, application, urlLogin): Promise<any[]> {
+  //   return new Promise<any[]>((resolve, reject) => {
+  //     this.accesorioCatalogService.postSiscoLogin(email, password, application, urlLogin).subscribe(async (aut) => {
+  //       resolve(aut);
+  //     }, (httpError) => {
+  //       const message = typeof httpError.error === 'object' ? JSON.stringify(httpError.error) : httpError.error;
+  //       reject([{ Error: message }]);
+  //     });
+  //   });
+  // }
 
 }

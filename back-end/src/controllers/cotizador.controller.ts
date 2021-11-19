@@ -761,22 +761,16 @@ export class CotizadorController extends BaseController implements IController {
             this.insertaBitacoraUtilidadAdicionales.bind(this),
         );
 
-        // Cambio P10 - EHJ-COAL
+          // Cambio P10 - EHJ-COAL
         this.router.get(
             `${this.basePath}/validaNotificacionUtilidad/:idCotizacion/:idOpcion`,
             this.validaNotificacionUtilidad.bind(this),
         );
 
-        // Cambio P10 - EHJ-COAL
+          // Cambio P10 - EHJ-COAL
         this.router.get(
             `${this.basePath}/obtenTotalUtilidad/:idCotizacion/:idOpcion`,
             this.obtenTotalUtilidad.bind(this),
-        );
-
-        // Cambio P10 - EHJ-COAL
-        this.router.get(
-            `${this.basePath}/validaBotonUtilidad/:idUsuario`,
-            this.validaBotonUtilidad.bind(this),
         );
 
           // Cambio P10 - EHJ-COAL
@@ -2820,20 +2814,6 @@ export class CotizadorController extends BaseController implements IController {
         const idOpcion = Number(request.params.idOpcion);
         const cotizacionBusiness = new CotizadorBussiness();
         cotizacionBusiness.obtenTotalUtilidad(idCotizacion, idOpcion)
-            .then((res) => {
-                response.status(200).json(res);
-            })
-            .catch((error) => {
-                respuesta.error(request, response, `Error al mostrar utilidad`, 500, error);
-                // response.status(500).json(error);
-            });
-    }
-
-     // Valida Permiso para el boton de utilidad - EHJ-COAL
-     private validaBotonUtilidad(request: express.Request, response: express.Response) {
-        const idUsuario = Number(request.params.idUsuario);
-        const cotizacionBusiness = new CotizadorBussiness();
-        cotizacionBusiness.validaBotonUtilidad(idUsuario)
             .then((res) => {
                 response.status(200).json(res);
             })

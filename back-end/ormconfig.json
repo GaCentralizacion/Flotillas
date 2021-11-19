@@ -2,7 +2,7 @@
   {
     "name": "default",
     "type": "mssql",
-    "host": "192.168.20.123",
+    "host": "192.168.20.29",
     "port": 1433,
     "username": "sa",
     "password": "S0p0rt3",
@@ -28,7 +28,7 @@
   {
     "name": "sync",
     "type": "mssql",
-    "host": "192.168.20.123",
+    "host": "192.168.20.29",
     "port": 1433,
     "username": "sa",
     "password": "S0p0rt3",
@@ -51,7 +51,7 @@
   {
     "name": "corporativa",
     "type": "mssql",
-    "host": "192.168.20.123",
+    "host": "192.168.20.29",
     "port": 1433,
     "username": "sa",
     "password": "S0p0rt3",
@@ -75,7 +75,7 @@
   {
     "name": "bitacora",
     "type": "mssql",
-    "host": "192.168.20.123",
+    "host": "192.168.20.29",
     "port": 1433,
     "username": "sa",
     "password": "S0p0rt3",

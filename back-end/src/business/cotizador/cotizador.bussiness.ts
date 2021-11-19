@@ -2780,18 +2780,6 @@ export class CotizadorBussiness {
         });
     }
 
-     // obtiene utilidad  - EHJ-COAL
-     validaBotonUtilidad(idUsuario: number): Promise<any> {
-        return new Promise<any>(async (resolve, reject) => {
-            const connection = getConnection();
-            await connection.query(`exec sp_flotillas_obtenUsuarioUtilidad @idUsuario = '${idUsuario}'`)
-                .then((doc) => {
-                    resolve(doc);
-                })
-                .catch(reject);
-        });
-    }
-
     // obtiene utilidad  - EHJ-COAL
     obtenNotificacion(idCotizacion: string): Promise<any> {
         return new Promise<any>(async (resolve, reject) => {

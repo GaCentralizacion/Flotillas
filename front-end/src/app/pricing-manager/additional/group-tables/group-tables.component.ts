@@ -17,6 +17,7 @@ import { PricingManagerService } from '../../pricing.manager.service';
 import { AdditionalService } from '../additional.service';
 import { ConfiguraTipoOrdenComponent } from '../configura-tipo-orden/configura-tipo-orden.component';
 import { ConfiguraTipoOrdenAdicionalesComponent } from '../configura-tipo-orden-adicionales/configura-tipo-orden-adicionales.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-group-tables',
@@ -354,9 +355,9 @@ export class GroupTablesComponent implements OnInit {
         try {
           if (respElimina[0].idSolicitud) {
             this.accesorioCatalogService.getDatosSisco().toPromise().then((datos) => {
-              this.loginSisco(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin)
-                .then(async (aut: any[]) => {
-                  let token = aut[0].data.security.token;
+              // this.loginSisco(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin).then(async (aut: any[]) => {
+                  let token = environment.tokenSisco;
+                  //aut[0].data.security.token;
                   const paramsProcesar = {
                     idSolicitud: respElimina[0].idSolicitud,
                     idTipoSolicitud: datos[0].idTipoSolicitud,
@@ -369,7 +370,7 @@ export class GroupTablesComponent implements OnInit {
                   this.accesorioCatalogService.postDelSolicitudCompra(paramsProcesar, token, datos[0].urlPostDelSolicitudCompra, this.itemToDelete.idCotizacion).subscribe(async (respSisco) => {
                     this.ngOnInit();
                   });
-                });
+                //});
             });
           }
           else {
@@ -455,16 +456,16 @@ export class GroupTablesComponent implements OnInit {
   }
 
 
-  async loginSisco(email, password, application, urlLogin): Promise<any[]> {
-    return new Promise<any[]>((resolve, reject) => {
-      this.accesorioCatalogService.postSiscoLogin(email, password, application, urlLogin).subscribe(async (aut) => {
-        resolve(aut);
-      }, (httpError) => {
-        const message = typeof httpError.error === 'object' ? JSON.stringify(httpError.error) : httpError.error;
-        reject([{ Error: message }]);
-      });
-    });
-  }
+  // async loginSisco(email, password, application, urlLogin): Promise<any[]> {
+  //   return new Promise<any[]>((resolve, reject) => {
+  //     this.accesorioCatalogService.postSiscoLogin(email, password, application, urlLogin).subscribe(async (aut) => {
+  //       resolve(aut);
+  //     }, (httpError) => {
+  //       const message = typeof httpError.error === 'object' ? JSON.stringify(httpError.error) : httpError.error;
+  //       reject([{ Error: message }]);
+  //     });
+  //   });
+  // }
 
 }
 

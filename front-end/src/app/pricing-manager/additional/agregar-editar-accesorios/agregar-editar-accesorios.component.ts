@@ -12,6 +12,7 @@ import { elementContainerEnd } from '@angular/core/src/render3';
 //SISCO
 import { CatalogoSiscoComponent } from '../catalogo-sisco/catalogo-sisco.component';
 import { AgregarAccesorioSiscoComponent } from '../agregar-accesorio-sisco/agregar-accesorio-sisco.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-agregar-editar-accesorios',
@@ -989,8 +990,7 @@ export class AgregarEditarAccesoriosComponent implements OnInit {
       this.accesorioCatalogService.getDatosSisco().subscribe(async (datos) => {
 
         //this.accesorioCatalogService.postSiscoLogin(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin).subscribe(async (aut) => {
-        await this.loginSisco(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin)
-          .then(async (aut: any[]) => {
+        // await this.loginSisco(datos[0].email, datos[0].password, datos[0].application, datos[0].urlLogin).then(async (aut: any[]) => {
 
             let filtroSisco = {
               "idTipoObjeto": datos[0].idTipoObjeto,
@@ -1001,7 +1001,8 @@ export class AgregarEditarAccesoriosComponent implements OnInit {
               "idMoneda": datos[0].idMoneda
             };
 
-            let token = aut[0].data.security.token;
+            let token = environment.tokenSisco;
+            //aut[0].data.security.token;
 
             this.accesorioCatalogService.getCatalogoAccesoriosSISCO(filtroSisco, token, datos[0].urlGetPartidas).subscribe(async (resp) => {
 
@@ -1056,12 +1057,12 @@ export class AgregarEditarAccesoriosComponent implements OnInit {
               //this.toastrService.error(message, 'Catalogo de Partidas SISCO');
             });
             //});
-          })//LOGIN SISCO
-          .catch(err => {
-            let error = JSON.parse(err[0].Error);
-            this.toastrService.error(error.errors[0].description, 'LOGIN SISCO');
-          }
-          );
+          // })//LOGIN SISCO
+          // .catch(err => {
+          //   let error = JSON.parse(err[0].Error);
+          //   this.toastrService.error(error.errors[0].description, 'LOGIN SISCO');
+          // }
+          // );
       });
     });
   }
@@ -1108,15 +1109,15 @@ export class AgregarEditarAccesoriosComponent implements OnInit {
     return validacion;
   }
 
-  async loginSisco(email, password, application, urlLogin): Promise<any[]> {
-    return new Promise<any[]>((resolve, reject) => {
-      this.accesorioCatalogService.postSiscoLogin(email, password, application, urlLogin).subscribe(async (aut) => {
-        resolve(aut);
-      }, (httpError) => {
-        const message = typeof httpError.error === 'object' ? JSON.stringify(httpError.error) : httpError.error;
-        reject([{ Error: message }]);
-      });
-    });
-  }
+  // async loginSisco(email, password, application, urlLogin): Promise<any[]> {
+  //   return new Promise<any[]>((resolve, reject) => {
+  //     this.accesorioCatalogService.postSiscoLogin(email, password, application, urlLogin).subscribe(async (aut) => {
+  //       resolve(aut);
+  //     }, (httpError) => {
+  //       const message = typeof httpError.error === 'object' ? JSON.stringify(httpError.error) : httpError.error;
+  //       reject([{ Error: message }]);
+  //     });
+  //   });
+  // }
 
 }
